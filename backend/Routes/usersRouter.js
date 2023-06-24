@@ -10,7 +10,7 @@ userRouter.get("/", async (req, res) => {
       handleRouteLogic(res, "Error", "Could Not Fetch Users", 404);
     }
   } catch (e) {
-    handleRouteLogic(res, "Error", e.message);
+    handleRouteLogic(res, "Error", e.message, 403);
   }
 });
 userRouter.get("/:id", async (req, res) => {
@@ -31,7 +31,7 @@ userRouter.get("/:id", async (req, res) => {
       handleRouteLogic(res, "Error", "User Not Found", 404);
     }
   } catch (e) {
-    handleRouteLogic(res, "Error", e.message, 404);
+    handleRouteLogic(res, "Error", e.message, 403);
   }
 });
 userRouter.put("/:id", async (req, res) => {
@@ -68,10 +68,10 @@ userRouter.put("/:id", async (req, res) => {
         updatedUser.rows[0]
       );
     } else {
-      handleRouteLogic(res, "Error", "Unable to Update User", 404);
+      handleRouteLogic(res, "Error", "Unable to Update User", 403);
     }
   } catch (e) {
-    handleRouteLogic(res, "Error", e.message, 404);
+    handleRouteLogic(res, "Error", e.message, 403);
   }
 });
 
@@ -82,7 +82,7 @@ userRouter.delete("/:id", async (req, res) => {
 
     handleRouteLogic(res, "Success", `user ${id} has been deleted`, 200);
   } catch (e) {
-    handleRouteLogic(res, "Error", e.message, 404);
+    handleRouteLogic(res, "Error", e.message, 403);
   }
 });
 module.exports = userRouter;

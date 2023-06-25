@@ -36,12 +36,20 @@ authRouter.post("/register", async (req, res) => {
     );
 
     if (newUser.length > 0) {
+      const val = Math.floor(1000 + Math.random() * 9000).toString();
+      const userName =
+        newUser[0]["first_name"] + "-" + newUser[0]["last_name"] + val;
+
+      await queryDatabase(
+        "UPDATE users SET username = $1 WHERE email = $2",
+        [userName, email]
+      );
+
       handleRouteLogic(res, "Success", "User Registered", 200, newUser[0]);
     } else {
-      handleRouteLogic(res, "Error", "Could Not Register User", 403);
+      handleRouteLogic(res, "Error", "Could Not Generate Username", 403);
     }
   } catch (e) {
-    console.log("error", e.message);
     handleRouteLogic(res, "Error", e.message, 403);
   }
 });

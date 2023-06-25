@@ -1,6 +1,7 @@
 const express = require("express");
 const { queryDatabase, handleRouteLogic } = require("../utils");
 const userRouter = express.Router();
+
 userRouter.get("/", async (req, res) => {
   try {
     const allusers = await queryDatabase("SELECT * FROM users");

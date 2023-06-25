@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const pool = require("./db");
 const handleRouteLogic = (res, state, message, status, data = null) => {
   return res.status(status).send({

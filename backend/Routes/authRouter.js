@@ -3,8 +3,7 @@ const authRouter = express.Router();
 const { queryDatabase, handleRouteLogic } = require("../utils");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-// HashSync - syncronus
-// Hash - is async so requires await keyword
+
 authRouter.post("/register", async (req, res) => {
   try {
     const {
@@ -47,23 +46,35 @@ authRouter.post("/register", async (req, res) => {
   }
 });
 
-
 authRouter.post("/login", async (req, res) => {
   try {
-    const { password } = req.body;
-    const foundUser = req.user;
+    const { email, password } = req.body;
+    const user = await queryDatabase("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
 
-    const validPass = await bcrypt.compare(password, foundUser.password);
-    if (validPass) {
-      const token = jwt.sign({ email: foundUser.email }, process.env.SECRET);
+    if (user.length > 0) {
+      const founduser = user[0];
+      if (founduser.password) {
+        let validPass = await bcrypt.compare(password, founduser.password);
 
-
-      handleRouteLogic(res, "Success", "User Logged In", 200, token);
+        if (validPass) {
+          const token = jwt.sign(
+            { email: founduser.email },
+            process.env.SECRET
+          );
+          handleRouteLogic(res, "Success", "User Logged In", 200, token);
+        } else {
+          handleRouteLogic(res, "Error", "User Credentials Not Valid", 403);
+        }
+      } else {
+        handleRouteLogic(res, "Error", "User Password Not Found", 500);
+      }
     } else {
-      handleRouteLogic(res, "Error", "User with these credentials not found");
+      handleRouteLogic(res, "Error", "User Not Found", 404);
     }
   } catch (e) {
-    handleRouteLogic(res, "Error", e.message, 403);
+    handleRouteLogic(res, "Error", e.message, 500);
   }
 });
 

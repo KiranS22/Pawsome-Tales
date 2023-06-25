@@ -34,9 +34,9 @@ try{
   if(postExisits === 0){
     handleRouteLogic(res, "Error",  "Could Not Find Post", 404)
   }
-  
 
-  const newCommentsForPost = await queryDatabase("");
+
+  const newCommentsForPost = await queryDatabase("INSERT INTO comments(");
 }catch(e){
 
 }

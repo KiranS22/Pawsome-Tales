@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 app.use(express.json());
-const bcrypt = require("bcryptjs");
+
 const authRouter = require("./Routes/authRouter");
 const postsRouter = require("./Routes/postsRouter");
 const commentsRouter = require("./Routes/commentsRouter");

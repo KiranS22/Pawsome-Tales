@@ -29,17 +29,18 @@ authRouter.post("/register", async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-
+// Inserting user given information
     const newUser = await queryDatabase(
       "INSERT INTO users(first_name, last_name, email, password, phone_number, city, postcode) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
       [first_name, last_name, email, hash, phone_number, city, postcode]
     );
 
     if (newUser.length > 0) {
+      // generating a username
       const val = Math.floor(1000 + Math.random() * 9000).toString();
       const userName =
         newUser[0]["first_name"] + "-" + newUser[0]["last_name"] + val;
-
+// inserting that username into the database
       await queryDatabase(
         "UPDATE users SET username = $1 WHERE email = $2",
         [userName, email]

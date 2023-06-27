@@ -1,7 +1,7 @@
 const express = require("express");
 const { queryDatabase, handleRouteLogic } = require("../utils");
 const userRouter = express.Router();
-
+// GET all users
 userRouter.get("/", async (req, res) => {
   try {
     const allusers = await queryDatabase("SELECT * FROM users");
@@ -14,6 +14,7 @@ userRouter.get("/", async (req, res) => {
     handleRouteLogic(res, "Error", e.message, 403);
   }
 });
+// GET user by ID
 userRouter.get("/:id", async (req, res) => {
   try {
     let { id } = req.params;
@@ -35,9 +36,10 @@ userRouter.get("/:id", async (req, res) => {
     handleRouteLogic(res, "Error", e.message, 403);
   }
 });
+// UPDATE user by ID
 userRouter.put("/:id", async (req, res) => {
   try {
-    let {
+    const {
       first_name,
       last_name,
       email,
@@ -75,13 +77,20 @@ userRouter.put("/:id", async (req, res) => {
     handleRouteLogic(res, "Error", e.message, 403);
   }
 });
-
+// DELETE user by ID
 userRouter.delete("/:id", async (req, res) => {
   try {
-    let { id } = req.params;
-    await handleRouteLogic("DELETE FROM users WHERE id = $1", [Number(id)]);
+    const { id } = req.params;
+    const userToRemove = await handleRouteLogic(
+      "DELETE FROM users WHERE id = $1",
+      [Number(id)]
+    );
 
-    handleRouteLogic(res, "Success", `user ${id} has been deleted`, 200);
+    if (userToRemove) {
+      handleRouteLogic(res, "Success", `user ${id} has been deleted`, 200);
+    } else {
+      handleRouteLogic(res, "Error", "Could Not Delete User", 200);
+    }
   } catch (e) {
     handleRouteLogic(res, "Error", e.message, 403);
   }

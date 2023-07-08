@@ -1,0 +1,4 @@
+.social-media-post .like-icon,
+.social-media-post .comment-icon {
+  color: var(--accent-1);
+}

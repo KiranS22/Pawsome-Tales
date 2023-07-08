@@ -1,0 +1,24 @@
+nav {
+  width: 89%;
+  margin: 0 auto;
+}
+.logo-img {
+  width: 12rem;
+}
+.nav-bg {
+  background-color: var(--main-bg-color);
+}
+
+.fa-user {
+  color: var(--accent-1);
+  font-size: 2rem;
+}
+
+input[type="search"] {
+  border-radius: 5px;
+  width: 25rem;
+}
+
+input[type="search"]:focus {
+  outline: var(--accent-2);
+}

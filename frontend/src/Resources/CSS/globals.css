@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-color: var(--body-bg);
+}
+
+  :root {
+    --main-bg-color: #142850;
+    --accent-1: #ff5a5f;
+    --accent-2: #00a8cc;
+    --body-bg: #f8f9fa;
+  }
+
+.border {
+  border: 5px solid red;
+}

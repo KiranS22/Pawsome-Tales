@@ -33,7 +33,7 @@ const Navbar = () => {
               aria-label="Search"
             />
           </form>
-          <Link className="nav-link" to="/user">
+          <Link className="nav-link" to="/profile">
             <i className="far fa-user"></i>
           </Link>
         </div>

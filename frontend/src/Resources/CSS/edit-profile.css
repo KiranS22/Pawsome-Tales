@@ -1,0 +1,19 @@
+.edit-profile .card-body {
+  padding: 2rem;
+}
+
+.edit-profile form .form-label {
+  font-weight: bold;
+}
+
+.edit-profile form .form-control {
+  border-radius: 0;
+}
+
+.edit-profile button[type='submit'] {
+  border-radius: 0;
+}
+
+.edit-profile img.rounded-circle {
+  width: 150px;
+}

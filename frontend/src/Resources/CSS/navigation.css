@@ -13,7 +13,9 @@ nav {
   color: var(--accent-1);
   font-size: 1.5rem;
 }
-
+.fa-user:hover{
+  color: var(--icon-hover);
+}
 input[type="search"] {
   border-radius: 5px;
   width: 25rem;

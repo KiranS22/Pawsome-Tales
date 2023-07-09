@@ -1,0 +1,31 @@
+h1 {
+  font-family: var(--heading-font);
+  font-size: var(--heading-size);
+}
+
+.fa-paw {
+  font-size: 2em;
+}
+
+.btn-outline-dark {
+  color: var(--accent-2);
+  background-color: #fff;
+  border-color: var(--accent-2);
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--accent-2);
+  border-color: #fff;
+}
+
+.border {
+  border: 2px solid #000;
+}
+
+.rounded {
+  border-radius: 10px;
+}
+
+.p-4 {
+  padding: 2rem;
+}

@@ -1,10 +1,10 @@
 .post-bar-container {
-  width: 37.5rem;
-  height: 18.75rem;
+  width: 30rem;
+  height: 15rem;
   background-color: var(--accent-2);
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a box shadow for depth */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .post-bar-container input {
@@ -22,4 +22,61 @@
 
 .post-bar-container input::placeholder {
   color: var(--main-text);
+}
+
+.fa-image,
+.fa-face-smile {
+  color: var(--accent-1);
+  font-size: 1.5rem;
+}
+
+.fa-image {
+  margin-right: 1.5rem;
+}
+
+.fa-image:hover,
+.fa-face-smile:hover {
+  color: var(--icon-hover);
+}
+
+.btn-modal-post {
+  color: var(--accent-2);
+  background-color: #fff;
+  border-color: var(--accent-2);
+}
+
+.btn-modal-post:hover {
+  background-color: var(--accent-2);
+  border-color: #fff;
+}
+
+.btn-modal-cancel {
+  color: #fff;
+  background-color: var(--accent-1);
+  border-color: var(--accent-1);
+}
+
+.btn-modal-cancel:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: var(--accent-2);
+}
+
+button.close {
+  color: var(--accent-1);
+  padding: 0.2rem;
+  background-color: #fff;
+  font-size: 1.8rem;
+  border: #fff;
+  width: 2rem;
+  height: 2.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button.close:hover {
+  color: #fff;
+  background-color: var(--accent-1);
+  border: var(--accent-2);
 }

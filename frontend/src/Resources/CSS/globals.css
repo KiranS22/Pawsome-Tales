@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Proza+Libre&display=swap");
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -13,8 +15,11 @@ body {
   --accent-1: #ff5a5f;
   --accent-2: #00a8cc;
   --body-bg: #f8f9fa;
+  --heading-font: "Proza Libre", sans-serif;
+  --heading-size: 2.2rem;
+  --icon-hover: #b71661;
 }
 
-.border {
+.c-border {
   border: 5px solid red;
 }

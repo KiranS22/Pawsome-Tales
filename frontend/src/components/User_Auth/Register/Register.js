@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./../../../Resources/CSS/user-auth.css";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -22,8 +23,16 @@ const Register = () => {
     <section>
       <div className="container-fluid">
         <div className="row d-flex justify-content-center align-items-center h-100">
+          <div className="form-header container d-flex justify-content-around  mt-4">
+            <h1 className="font-weight-bold">REGISTER</h1>
+            <i className="fa-solid fa-paw font-weight-bold mt-2"></i>
+          </div>
           <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form onSubmit={handleSubmit} method="POST">
+            <form
+              className="border rounded p-4"
+              onSubmit={handleSubmit}
+              method="POST"
+            >
               <div className="form-outline mb-4">
                 <label className="form-label" htmlFor="firstName">
                   First Name:
@@ -161,18 +170,6 @@ const Register = () => {
                   }
                   required
                 />
-              </div>
-
-              <div className="text-center text-lg-start mt-4 pt-2">
-                <button type="submit" className="btn  btn-outline-dark btn-lg">
-                  Register
-                </button>
-                <p className="small fw-bold mt-2 pt-1 mb-0">
-                  Already have an account?{" "}
-                  <Link to="/login" className="link-danger">
-                    Log In
-                  </Link>
-                </p>
               </div>
             </form>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./../../Resources/CSS/edit-profile.css";
+import "./../../Resources/CSS/user-auth.css";
 import noProfile from "./../../Resources/Images/no-profile.png";
 
 const EditProfile = () => {
@@ -21,6 +22,10 @@ const EditProfile = () => {
   return (
     <section className="profile">
       <div className="container py-5">
+        <div className="form-header container d-flex justify-content-between  mt-4">
+          <h1 className="font-weight-bold">EDIT PROFILE</h1>
+          <i className="fa-solid fa-paw font-weight-bold mt-2"></i>
+        </div>
         <div className="row">
           <div className="col-lg-4">
             <div className="card mb-4">
@@ -142,7 +147,7 @@ const EditProfile = () => {
                     />
                   </div>
 
-                  <button type="submit" className="btn btn-primary mt-3">
+                  <button type="submit" className="btn btn-outline-dark mt-3">
                     Save Changes
                   </button>
                 </form>

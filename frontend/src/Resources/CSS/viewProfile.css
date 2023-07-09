@@ -1,0 +1,68 @@
+.vh-50-view-profile {
+  width: 75%;
+  margin: 0 auto;
+}
+
+.card-view-profile {
+  border-radius: 15px;
+}
+
+.img-fluid-view-profile {
+  width: 180px;
+  border-radius: 10px;
+}
+
+.text-black-view-profile {
+  color: var(--main-text);
+}
+
+.mb-1-view-profile {
+  margin-bottom: 1rem;
+}
+
+.mb-2-view-profile {
+  margin-bottom: 2rem;
+}
+
+.pb-1-view-profile {
+  padding-bottom: 1rem;
+}
+
+.d-flex-justify-start-view-profile {
+  justify-content: flex-start;
+}
+
+.rounded-3-view-profile {
+  border-radius: 0.3rem;
+}
+
+.p-2-view-profile {
+  padding: 0.5rem;
+}
+
+.mb-0-view-profile {
+  margin-bottom: 0;
+}
+
+.pt-1-view-profile {
+  padding-top: 0.25rem;
+}
+
+.btn-outline-primary-view-profile:hover {
+  background-color: var(--accent-2);
+  color: #fff;
+}
+
+.btn-primary-view-profile {
+  background-color: var(--accent-2);
+  border-color: var(--accent-1);
+}
+
+.btn-primary-view-profile:hover {
+  background-color: #fff;
+  border-color: var(--accent-2);
+}
+
+.user-posts {
+  background-color: var(--accent-2);
+}

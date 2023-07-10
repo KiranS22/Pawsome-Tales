@@ -29,7 +29,7 @@ authRouter.post("/register", async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-// Inserting user given information
+    // Inserting user given information
     const newUser = await queryDatabase(
       "INSERT INTO users(first_name, last_name, email, password, phone_number, city, postcode) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
       [first_name, last_name, email, hash, phone_number, city, postcode]
@@ -40,11 +40,11 @@ authRouter.post("/register", async (req, res) => {
       const val = Math.floor(1000 + Math.random() * 9000).toString();
       const userName =
         newUser[0]["first_name"] + "-" + newUser[0]["last_name"] + val;
-// inserting that username into the database
-      await queryDatabase(
-        "UPDATE users SET username = $1 WHERE email = $2",
-        [userName, email]
-      );
+      // inserting that username into the database
+      await queryDatabase("UPDATE users SET username = $1 WHERE email = $2", [
+        userName,
+        email,
+      ]);
 
       handleRouteLogic(res, "Success", "User Registered", 200, newUser[0]);
     } else {
@@ -84,6 +84,31 @@ authRouter.post("/login", async (req, res) => {
     }
   } catch (e) {
     handleRouteLogic(res, "Error", e.message, 500);
+  }
+});
+
+authRouter.put("/update-profile", async (req, res) => {
+  try {
+    const { firstName, lastName, email, tel, address, city, postcode } =
+      req.body;
+
+    const updateProfile = await queryDatabase(
+      "UPDATE users SET first_name = $1, last_name = $2,  phone_number = $3, address = $4, city=$5, postcode=$6 WHERE email = $7 RETURNING *",
+      [firstName, lastName, tel, address, city, postcode, email]
+    );
+    if (updateProfile[0].length > 0) {
+      handleRouteLogic(
+        res,
+        "Success",
+        "Profile Updated Sucsessfully",
+        200,
+        updateProfile[0]
+      );
+    } else {
+      handleRouteLogic(res, "Error", "Could Not Update Profile", 404);
+    }
+  } catch (e) {
+    handleRouteLogic(res, "Error", e.message, 404);
   }
 });
 

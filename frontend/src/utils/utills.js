@@ -43,12 +43,12 @@ export const RegisterUserCall = async (user, value) => {
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}/auth/register`,
-      { ...user, tel: value },
+      { ...user, tel: value }
     );
+
 
     return response;
   } catch (e) {
     console.log("Error:", e.message);
-    
   }
 };

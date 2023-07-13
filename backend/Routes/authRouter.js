@@ -7,13 +7,14 @@ const jwt = require("jsonwebtoken");
 // Not getting hit at all
 authRouter.post("/register", async (req, res) => {
   console.log("register hit");
+
   try {
     const {
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       password,
-      phone_number,
+      tel,
       address,
       city,
       postcode,
@@ -26,7 +27,7 @@ authRouter.post("/register", async (req, res) => {
     );
 
     if (existingUser.length > 0) {
-      handleRouteLogic(res, "Error", "User already exists", 403);
+      handleRouteLogic(res, "Invalid", "User already exists", 403);
       return;
     }
 
@@ -34,35 +35,37 @@ authRouter.post("/register", async (req, res) => {
     const hash = await bcrypt.hash(password, salt);
     // Inserting user given information
     const newUser = await queryDatabase(
-      "INSERT INTO users(first_name, last_name, email, password, phone_number,address, city, postcode) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
-      [
-        first_name,
-        last_name,
-        email,
-        hash,
-        phone_number,
-        address,
-        city,
-        postcode,
-      ]
+      "INSERT INTO users(first_name, last_name, email, password, phone_number, address, city, postcode) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      [firstName, lastName, email, hash, tel, address, city, postcode]
     );
-    if (newUser[0].length > 0) {
-      // generating a username
+
+    if (newUser.length > 0) {
+      // Generating a username
       const val = Math.floor(1000 + Math.random() * 9000).toString();
       const userName =
         newUser[0]["first_name"] + "-" + newUser[0]["last_name"] + val;
-      // inserting that username into the database
-      await queryDatabase("UPDATE users SET username = $1 WHERE email = $2", [
-        userName,
-        email,
-      ]);
+      // Inserting the username into the database
+      const generatedUserName = await queryDatabase(
+        "UPDATE users SET username = $1 WHERE email = $2 RETURNING *",
+        [userName, email]
+      );
 
-      handleRouteLogic(res, "Success", "User Registered", 200, newUser[0]);
+      if (generatedUserName.length > 0) {
+        handleRouteLogic(
+          res,
+          "Success",
+          "User Registered and Username Created",
+          200,
+          generatedUserName[0]
+        );
+      } else {
+        handleRouteLogic(res, "Error", "Could Not Generate Username", 403);
+      }
     } else {
-      handleRouteLogic(res, "Error", "Could Not Generate Username", 403);
+      handleRouteLogic(res, "Error", "Could Not Register User", 403);
     }
   } catch (e) {
-    handleRouteLogic(res, "Error", e.stack, 403);
+    handleRouteLogic(res, "Error", e.message, 403);
   }
 });
 

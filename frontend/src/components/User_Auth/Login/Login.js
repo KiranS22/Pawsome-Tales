@@ -1,13 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./../../../Resources/CSS/user-auth.css";
+import { logInUserCall } from "../../../utils/utills";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  logInUser,
+  selectIsLoggedIn,
+} from "./../../../Redux/features/Slices/Auth/Auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loggedIn = useSelector(selectIsLoggedIn);
+  const userAlreadyLoggedIn = () => {
+    if (loggedIn) {
+      navigate("/feed");
+    }
+  };
 
+  useEffect(() => {
+    userAlreadyLoggedIn();
+  }, [loggedIn]);
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+
+      const response = await logInUserCall();
+
+      // dispatch(logInUser(response.data.user));
+      // const status = response.data.status;
+      // if (status === "success") {
+      //   navigate("/");
+      // }
+    } catch (err) {
+      console.log({ status: "Error", message: err.meesage });
+    }
+  };
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="col-md-8 col-lg-6 col-xl-4">
@@ -16,7 +50,12 @@ const Login = () => {
           <i className="fa-solid fa-paw font-weight-bold mt-2"></i>
         </div>
 
-        <form className="mt-2 border rounded p-4">
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+          className="mt-2 border rounded p-4"
+        >
           <div className="divider d-flex align-items-center my-4"></div>
 
           <div className="form-outline mb-4">
@@ -28,7 +67,8 @@ const Login = () => {
               id="email"
               className="form-control form-control-lg"
               placeholder="Enter a valid email address"
-              value=""
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
               name="email"
             />
           </div>
@@ -42,7 +82,8 @@ const Login = () => {
               id="password"
               className="form-control form-control-lg"
               placeholder="Enter password"
-              value=""
+              value={user.password}
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
               name="password"
             />
           </div>

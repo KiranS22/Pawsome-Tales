@@ -13,7 +13,7 @@ const queryDatabase = async (queryString, parameters) => {
     const result = await pool.query(queryString, parameters);
     return result.rows;
   } catch (error) {
-    handleRouteLogic(res, "error", error.message, 401);
+ 
   }
 };
 const isUserLoggedIn = async (req, res, next) => {

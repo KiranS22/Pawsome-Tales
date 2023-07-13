@@ -23,3 +23,14 @@ body {
 .c-border {
   border: 5px solid red;
 }
+
+.btn-outline-dark {
+  color: var(--accent-2);
+  background-color: #fff;
+  border-color: var(--accent-2);
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--accent-2);
+  border-color: #fff;
+}

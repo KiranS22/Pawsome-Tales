@@ -4,7 +4,9 @@ const { queryDatabase, handleRouteLogic } = require("../utils");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+// Not getting hit at all
 authRouter.post("/register", async (req, res) => {
+  console.log("register hit");
   try {
     const {
       first_name,
@@ -12,6 +14,7 @@ authRouter.post("/register", async (req, res) => {
       email,
       password,
       phone_number,
+      address,
       city,
       postcode,
     } = req.body;
@@ -31,11 +34,19 @@ authRouter.post("/register", async (req, res) => {
     const hash = await bcrypt.hash(password, salt);
     // Inserting user given information
     const newUser = await queryDatabase(
-      "INSERT INTO users(first_name, last_name, email, password, phone_number, city, postcode) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-      [first_name, last_name, email, hash, phone_number, city, postcode]
+      "INSERT INTO users(first_name, last_name, email, password, phone_number,address, city, postcode) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      [
+        first_name,
+        last_name,
+        email,
+        hash,
+        phone_number,
+        address,
+        city,
+        postcode,
+      ]
     );
-
-    if (newUser.length > 0) {
+    if (newUser[0].length > 0) {
       // generating a username
       const val = Math.floor(1000 + Math.random() * 9000).toString();
       const userName =
@@ -51,7 +62,7 @@ authRouter.post("/register", async (req, res) => {
       handleRouteLogic(res, "Error", "Could Not Generate Username", 403);
     }
   } catch (e) {
-    handleRouteLogic(res, "Error", e.message, 403);
+    handleRouteLogic(res, "Error", e.stack, 403);
   }
 });
 
@@ -62,7 +73,7 @@ authRouter.post("/login", async (req, res) => {
       email,
     ]);
 
-    if (user.length > 0) {
+    if (user[0].length > 0) {
       const founduser = user[0];
       if (founduser.password) {
         let validPass = await bcrypt.compare(password, founduser.password);
@@ -111,5 +122,17 @@ authRouter.put("/update-profile", async (req, res) => {
     handleRouteLogic(res, "Error", e.message, 404);
   }
 });
-
+authRouter.get("/auth-user", (req, res) => {
+  try {
+    if (req.user) {
+      handleRouteLogic(res, "Success", "User Authenticated Sucsessfully", 201, {
+        user: req.user,
+      });
+    } else {
+      handleRouteLogic(res, "Error", "User Is Not Logged In", 403);
+    }
+  } catch (e) {
+    handleRouteLogic(res, "Error", e.message, 403);
+  }
+});
 module.exports = authRouter;

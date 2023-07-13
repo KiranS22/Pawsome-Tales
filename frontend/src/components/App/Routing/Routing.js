@@ -6,6 +6,8 @@ import Register from "../../User_Auth/Register/Register";
 import Feed from "../../Feed/Feed";
 import EditProfile from "../../Profile/EditProfile";
 import ViewProfile from "../../Profile/ViewProfile/ViewProfile";
+import ProtectedRoutes from "./ProtectedRoutes";
+import NotFoundPage from "../../PageNotFound/NotFoundPage";
 
 const Routing = () => {
   return (
@@ -14,15 +16,16 @@ const Routing = () => {
         <NavBar />
 
         <Routes>
-          <Route path="/" exact element={<Feed />} />
-          <Route path="/register" exact element={<Register />} />
-          <Route path="/login" exact element={<Login />} />
-          {/* Add to protected Routes after implementing Redux */}
-          <Route path="/profile" element={<EditProfile />} />
-          {/* Route path will  change once Redux is implemented */}
-          <Route path="/profile/view" element={<ViewProfile />} />
+          <Route path="/" element={<ProtectedRoutes />}>
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/profile" element={<EditProfile />} />
+            <Route path="/profile/view" element={<ViewProfile />} />
+          </Route>
 
-          {/* <Route path="/*" element={<NotFound />} /> */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+
+          <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </Router>
     </>

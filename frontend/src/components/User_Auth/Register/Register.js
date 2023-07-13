@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./../../../Resources/CSS/user-auth.css";
+import { RegisterUserCall } from "../../../utils/utills";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 const Register = () => {
+
+
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -12,25 +17,34 @@ const Register = () => {
     address: "",
     city: "",
     postcode: "",
+    tel: "",
   });
-
-  const handleSubmit = (e) => {
+  const [value, setValue] = useState("");
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-  };
+    if (user.password !== user.verifyPassword) {
+      alert("Passwords Must Match");
+    } else {
 
+      const response = await RegisterUserCall(user, value);
+      console.log("Response from Registeration Submit form ", response);
+    }
+
+    // const status = response.data.status;
+    // if (status === "success") {
+    //   navigate("/login");
+    // } else if (status === "invalid") {
+    //   toast.error("Looks like you already have an account. Please login.");
+    // }
+  };
   return (
     <section>
       <div className="container-fluid">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="form-header container d-flex justify-content-around  mt-4">
-            <h1 className="font-weight-bold">REGISTER</h1>
-            <i className="fa-solid fa-paw font-weight-bold mt-2"></i>
-          </div>
           <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form
               className="border rounded p-4"
-              onSubmit={handleSubmit}
+              onSubmit={(e) => handleSubmit(e)}
               method="POST"
             >
               <div className="form-outline mb-4">
@@ -122,6 +136,17 @@ const Register = () => {
               </div>
 
               <div className="form-outline mb-3">
+                <label className="form-label" htmlFor="tel">
+                  Mobile Number
+                </label>
+                <PhoneInput
+                  placeholder="Enter phone number"
+                  value={user.tel}
+                  onChange={setValue}
+                />
+              </div>
+
+              <div className="form-outline mb-3">
                 <label className="form-label" htmlFor="country">
                   Address
                 </label>
@@ -170,6 +195,18 @@ const Register = () => {
                   }
                   required
                 />
+              </div>
+
+              <div className="text-center text-lg-start mt-4 pt-2">
+                <button type="submit" className="btn btn-outline-dark btn-lg">
+                  Register
+                </button>
+                <p className="small fw-bold mt-2 pt-1 mb-0">
+                  Already have an account?{" "}
+                  <Link to="/login" className="link-danger">
+                    Login
+                  </Link>
+                </p>
               </div>
             </form>
           </div>

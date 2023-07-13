@@ -31,7 +31,8 @@ const Login = () => {
     try {
       e.preventDefault();
 
-      const response = await logInUserCall();
+      const response = await logInUserCall(user);
+      console.log("Response in Login Component ", response);
 
       // dispatch(logInUser(response.data.user));
       // const status = response.data.status;

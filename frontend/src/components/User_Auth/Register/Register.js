@@ -36,9 +36,9 @@ const Register = () => {
     }
   };
   return (
-    <div className="container d-flex justify-content-center align-items-center vh-100">
+    <div className="container d-flex justify-content-center align-items-center vh-10">
       <div className="col-md-8 col-lg-6 col-xl-4">
-        <div className="form-header container d-flex justify-content-between  mt-4">
+        <div className="form-header container d-flex justify-content-around  mt-4">
           <h1 className="font-weight-bold">REGISTER</h1>
           <i className="fa-solid fa-paw font-weight-bold mt-2"></i>
         </div>

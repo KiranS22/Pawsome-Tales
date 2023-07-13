@@ -26,11 +26,11 @@ export const getLoggedInUser = async () => {
 
 // Handle Login Form Submittion
 export const logInUserCall = async (user) => {
+  console.log("Backend route ");
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}/auth/login`,
-      user,
-      { withCredentials: true }
+      user
     );
 
     return response;
@@ -45,7 +45,6 @@ export const RegisterUserCall = async (user, value) => {
       `${process.env.REACT_APP_SERVER_URL}/auth/register`,
       { ...user, tel: value }
     );
-
 
     return response;
   } catch (e) {

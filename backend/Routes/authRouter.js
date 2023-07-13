@@ -75,9 +75,11 @@ authRouter.post("/login", async (req, res) => {
     const user = await queryDatabase("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
-
-    if (user[0].length > 0) {
+    console.log("User after query", user);
+    if (user.length > 0) {
+      console.log("reached  inside if statment");
       const founduser = user[0];
+      console.log("User inside If Statement", founduser);
       if (founduser.password) {
         let validPass = await bcrypt.compare(password, founduser.password);
 

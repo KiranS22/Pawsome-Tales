@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "../../Navigation/NavBar";
 import Login from "../../User_Auth/Login/Login";
@@ -10,6 +10,10 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import NotFoundPage from "../../PageNotFound/NotFoundPage";
 
 const Routing = () => {
+  useEffect(() => {
+    console.log("Routing Rendered!");
+  }, []);
+
   return (
     <>
       <Router>

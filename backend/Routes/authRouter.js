@@ -1,13 +1,11 @@
 const express = require("express");
 const authRouter = express.Router();
-const { queryDatabase, handleRouteLogic } = require("../utils");
+const { queryDatabase, handleRouteLogic, isUserLoggedIn } = require("../utils");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // Not getting hit at all
 authRouter.post("/register", async (req, res) => {
-  console.log("register hit");
-
   try {
     const {
       firstName,
@@ -27,7 +25,7 @@ authRouter.post("/register", async (req, res) => {
     );
 
     if (existingUser.length > 0) {
-      handleRouteLogic(res, "Invalid", "User already exists", 403);
+      handleRouteLogic(res, "Invalid", "User already exists", 400);
       return;
     }
 
@@ -38,6 +36,7 @@ authRouter.post("/register", async (req, res) => {
       "INSERT INTO users(first_name, last_name, email, password, phone_number, address, city, postcode) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
       [firstName, lastName, email, hash, tel, address, city, postcode]
     );
+    // Adding plain password to database so I can debug the lpgin route
 
     if (newUser.length > 0) {
       // Generating a username
@@ -75,20 +74,21 @@ authRouter.post("/login", async (req, res) => {
     const user = await queryDatabase("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
-    console.log("User after query", user);
+    // console.log("User after query", user);
     if (user.length > 0) {
-      console.log("reached  inside if statment");
       const founduser = user[0];
-      console.log("User inside If Statement", founduser);
-      if (founduser.password) {
-        let validPass = await bcrypt.compare(password, founduser.password);
 
+      if (founduser.password) {
+        const validPass = await bcrypt.compare(password, founduser.password);
         if (validPass) {
           const token = jwt.sign(
             { email: founduser.email },
             process.env.SECRET
           );
-          handleRouteLogic(res, "Success", "User Logged In", 200, token);
+          handleRouteLogic(res, "Success", "User Logged In", 200, {
+            user: user,
+            token,
+          });
         } else {
           handleRouteLogic(res, "Error", "User Credentials Not Valid", 403);
         }
@@ -127,10 +127,11 @@ authRouter.put("/update-profile", async (req, res) => {
     handleRouteLogic(res, "Error", e.message, 404);
   }
 });
-authRouter.get("/auth-user", (req, res) => {
+authRouter.get("/auth-user", isUserLoggedIn, (req, res) => {
+  console.log("Route Hit");
   try {
     if (req.user) {
-      handleRouteLogic(res, "Success", "User Authenticated Sucsessfully", 201, {
+      handleRouteLogic(res, "Success", "User Authenticated Successfully", 200, {
         user: req.user,
       });
     } else {

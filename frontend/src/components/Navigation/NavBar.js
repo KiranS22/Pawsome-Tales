@@ -2,8 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logowhite from "./../../Resources/Images/png/logo-white.png";
 import "../../Resources/CSS/navigation.css";
+import { selectIsLoggedIn } from "../../Redux/features/Slices/Auth/Auth";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const loggedIn = useSelector(selectIsLoggedIn);
   return (
     <nav className="navbar navbar-expand-lg navbar-light nav-bg shadow">
       <div className="container">
@@ -18,9 +21,7 @@ const Navbar = () => {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
-        >
-          {/* Add Toggler Content Here */}
-        </button>
+        ></button>
         <div
           className="collapse navbar-collapse d-flex justify-content-evenly"
           id="navbarSupportedContent"
@@ -36,6 +37,12 @@ const Navbar = () => {
           <Link className="nav-link" to="/profile">
             <i className="far fa-user"></i>
           </Link>
+          {loggedIn ? (
+            // Rendered when loggedIn is true
+            <button className="nav-link btn btn-outline-dark">Logout</button>
+          ) : (
+            <button className="nav-link btn btn-outline-dark">Login</button>
+          )}
         </div>
       </div>
     </nav>

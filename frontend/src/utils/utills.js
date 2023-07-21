@@ -1,32 +1,25 @@
 import axios from "axios";
+const token = localStorage.getItem("token"); // Retrieve the token from localStorage
 
 // function used to get loggedIn User when Application Loads
-export const getLoggedInUser = async () => {
+export const fetchUser = async () => {
   try {
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
     const response = await axios.get(
       `${process.env.REACT_APP_SERVER_URL}/auth/auth-user`,
       {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
-    console.log("Response From getLogged in user", response);
     return response;
-    // {...respo}
-    // if (response.data.status === "success") {
-    //   const { user } = responsve.data;
-    //   dispatch(logInUser(user));
-    // }
   } catch (err) {
-    console.log("something went wrong");
-    // return {status: error, message:}
+    console.log("Error:", err.message);
   }
 };
 
 // Handle Login Form Submittion
 export const logInUserCall = async (user) => {
-  console.log("Backend route ");
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_SERVER_URL}/auth/login`,
@@ -50,4 +43,29 @@ export const RegisterUserCall = async (user, value) => {
   } catch (e) {
     console.log("Error:", e.message);
   }
+};
+
+export const fetchAllPostsAPICall = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_SERVER_URL}/posts/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (err) {
+    console.log("Error:", err.meesage, "Stack", err.stack);
+  }
+};
+
+const logoutUser = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_SERVER_URL}/auth/logout`
+    );
+    return response;
+  } catch (e) {}
 };

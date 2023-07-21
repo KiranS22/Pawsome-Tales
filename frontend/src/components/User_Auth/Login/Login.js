@@ -17,6 +17,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const loggedIn = useSelector(selectIsLoggedIn);
+
   const userAlreadyLoggedIn = () => {
     if (loggedIn) {
       navigate("/feed");
@@ -32,15 +33,15 @@ const Login = () => {
       e.preventDefault();
 
       const response = await logInUserCall(user);
-      console.log("Response in Login Component ", response);
 
-      // dispatch(logInUser(response.data.user));
-      // const status = response.data.status;
-      // if (status === "success") {
-      //   navigate("/");
-      // }
+      const status = response.status;
+      const person = response.data.data;
+      if (status == 200) {
+        dispatch(logInUser(person));
+        navigate("/feed");
+      }
     } catch (err) {
-      console.log({ status: "Error", message: err.meesage });
+      console.log({ status: "Error", message: err.message, stack: err.stack });
     }
   };
   return (

@@ -25,12 +25,11 @@ const Register = () => {
       alert("Passwords Must Match");
     } else {
       const response = await RegisterUserCall(user, value);
-      console.log("Response from Registeration Submit form ", response);
 
-      const status = response.data.state;
-      if (status === "Success") {
+      const status = response.status;
+      if (status == 200) {
         navigate("/login");
-      } else if (status === "Invalid") {
+      } else if (status == 409) {
         console.log("Invalid");
       }
     }

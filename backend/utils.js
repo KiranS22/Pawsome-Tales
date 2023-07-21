@@ -12,11 +12,10 @@ const queryDatabase = async (queryString, parameters) => {
   try {
     const result = await pool.query(queryString, parameters);
     return result.rows;
-  } catch (error) {
- 
-  }
+  } catch (error) {}
 };
 const isUserLoggedIn = async (req, res, next) => {
+  console.log("middlewear Running", req.headers);
   try {
     const token = req.headers.authorization; // extracting the token from the auth header
     if (token) {
@@ -37,7 +36,7 @@ const isUserLoggedIn = async (req, res, next) => {
       handleRouteLogic(res, "Error", "Not authorized", 401);
     }
   } catch (e) {
-    handleRouteLogic(res, "Error", "Could not handle request", e.message, 401);
+    handleRouteLogic(res, "Error", e.message, 401);
   }
 };
 

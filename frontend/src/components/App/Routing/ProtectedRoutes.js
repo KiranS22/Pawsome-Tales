@@ -1,11 +1,18 @@
-import React from "react";
-import { selectIsLoggedIn } from "../../../Redux/features/Slices/Auth/Auth";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../CustomHooks/customHooks";
+
+//Custom Hook (React Component)
 
 const ProtectedRoutes = () => {
-  const loggedIn = useSelector(selectIsLoggedIn);
-  return loggedIn ? <Outlet /> : <Navigate to="/login" />;
+  const isAuth = useAuth();
+  console.log("isAuth", isAuth);
+
+  if (isAuth === null) {
+    return null;
+  }
+
+  return isAuth ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default ProtectedRoutes;

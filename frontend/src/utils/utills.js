@@ -12,9 +12,11 @@ export const fetchUser = async () => {
         },
       }
     );
-    return response;
+    const { data } = response.data;
+    data.token = token;
+    return data;
   } catch (err) {
-    console.log("Error:", err.message);
+    return { status: "error", message: err.message, where: err.stack };
   }
 };
 
@@ -25,6 +27,7 @@ export const logInUserCall = async (user) => {
       `${process.env.REACT_APP_SERVER_URL}/auth/login`,
       user
     );
+    console.log("login user response from Utils in the frontend", response);
 
     return response;
   } catch (err) {
@@ -59,13 +62,4 @@ export const fetchAllPostsAPICall = async () => {
   } catch (err) {
     console.log("Error:", err.meesage, "Stack", err.stack);
   }
-};
-
-const logoutUser = async () => {
-  try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_SERVER_URL}/auth/logout`
-    );
-    return response;
-  } catch (e) {}
 };

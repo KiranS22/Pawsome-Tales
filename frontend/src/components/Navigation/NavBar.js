@@ -1,12 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logowhite from "./../../Resources/Images/png/logo-white.png";
 import "../../Resources/CSS/navigation.css";
-import { selectIsLoggedIn } from "../../Redux/features/Slices/Auth/Auth";
-import { useSelector } from "react-redux";
+import {
+  logOutUser,
+  selectIsLoggedIn,
+} from "../../Redux/features/Slices/Auth/Auth";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
   const loggedIn = useSelector(selectIsLoggedIn);
+  console.log("Login state within navbar ", loggedIn);
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logOutUser());
+    navigate("/login");
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-light nav-bg shadow">
       <div className="container">
@@ -34,15 +47,20 @@ const Navbar = () => {
               aria-label="Search"
             />
           </form>
-          <Link className="nav-link" to="/profile">
-            <i className="far fa-user"></i>
-          </Link>
+
           {loggedIn ? (
-            // Rendered when loggedIn is true
-            <button className="nav-link btn btn-outline-dark">Logout</button>
-          ) : (
-            <button className="nav-link btn btn-outline-dark">Login</button>
-          )}
+            <>
+              <Link className="nav-link" to="/profile">
+                <i className="far fa-user"></i>
+              </Link>
+              <button
+                className="nav-link btn btn-outline-dark"
+                onClick={() => handleLogout()}
+              >
+                Logout
+              </button>
+            </>
+          ) : null}
         </div>
       </div>
     </nav>

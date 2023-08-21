@@ -15,7 +15,6 @@ const queryDatabase = async (queryString, parameters) => {
   } catch (error) {}
 };
 const isUserLoggedIn = async (req, res, next) => {
-  console.log("middlewear Running", req.headers);
   try {
     const token = req.headers.authorization; // extracting the token from the auth header
     if (token) {

@@ -86,7 +86,7 @@ authRouter.post("/login", async (req, res) => {
             process.env.SECRET
           );
           handleRouteLogic(res, "Success", "User Logged In", 200, {
-            user: user,
+            user: founduser,
             token,
           });
         } else {
@@ -128,7 +128,6 @@ authRouter.put("/update-profile", async (req, res) => {
   }
 });
 authRouter.get("/auth-user", isUserLoggedIn, (req, res) => {
-  console.log("Route Hit");
   try {
     if (req.user) {
       handleRouteLogic(res, "Success", "User Authenticated Successfully", 200, {

@@ -10,9 +10,6 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import NotFoundPage from "../../PageNotFound/NotFoundPage";
 
 const Routing = () => {
-  useEffect(() => {
-    console.log("Routing Rendered!");
-  }, []);
 
   return (
     <>

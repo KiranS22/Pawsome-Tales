@@ -12,14 +12,11 @@ export const fetchUser = async () => {
         },
       }
     );
-    const { data } = response.data;
-    data.token = token;
-    return data;
+    return response.data; // Return the response data object
   } catch (err) {
     return { status: "error", message: err.message, where: err.stack };
   }
 };
-
 // Handle Login Form Submittion
 export const logInUserCall = async (user) => {
   try {

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 export const useAuth = () => {
   console.log("useAuth Hook Running");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const loggedIn = useSelector(selectIsLoggedIn);
   const [isAuth, setIsAuth] = useState(null);
 
@@ -22,7 +22,7 @@ export const useAuth = () => {
       if (response.status === "error") {
         setIsAuth(false);
       } else {
-        const { user } = response.data.data;
+        const { user } = response.data;
         dispatch(logInUser(user));
         setIsAuth(true);
       }

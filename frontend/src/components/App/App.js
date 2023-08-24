@@ -6,7 +6,7 @@ import { useAuth } from "./CustomHooks/customHooks";
 import { useDispatch, useSelector } from "react-redux";
 import {
   logInUser,
-  selectIsLoggedIn,
+  selectIsLoggedIn, 
 } from "../../Redux/features/Slices/Auth/Auth";
 
 const App = () => {

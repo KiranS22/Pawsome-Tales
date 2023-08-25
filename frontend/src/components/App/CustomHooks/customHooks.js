@@ -18,12 +18,10 @@ export const useAuth = () => {
     console.log("useEffect in usaeAutrh running");
     const handleUser = async () => {
       const response = await fetchUser();
-      console.log("isAuth fetch user response", response);
-      if (response.status === "error") {
+      if (response.status === "Error") {
         setIsAuth(false);
       } else {
-        const { user } = response.data;
-        dispatch(logInUser(user));
+        dispatch(logInUser(response.data));
         setIsAuth(true);
       }
     };

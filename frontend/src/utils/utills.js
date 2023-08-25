@@ -12,7 +12,8 @@ export const fetchUser = async () => {
         },
       }
     );
-    return response.data; // Return the response data object
+    response.data.data.token = token;
+    return response.data;
   } catch (err) {
     return { status: "error", message: err.message, where: err.stack };
   }

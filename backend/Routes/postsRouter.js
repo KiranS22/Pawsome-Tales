@@ -56,22 +56,25 @@ postsRouter.post("/", async (req, res) => {
       "SELECT username FROM users WHERE email=$1",
       [email]
     );
+
     if (userName.length > 0) {
       const newPost = await queryDatabase(
-        "INSERT INTO posts(content, authour, image, title) VALUES ($1, $2, $3 $4) RETURNING*",
-        [content, userName, image, title]
+        "INSERT INTO posts(content, authour, image, title) VALUES ($1, $2, $3, $4) RETURNING *",
+        [content, userName[0].username, image, title]
       );
+
+      console.log("After the newPost query", newPost);
       if (newPost.length > 0) {
         handleRouteLogic(
           res,
           "Success",
-          "Post Added Sucessfully",
+          "Post Added Successfully",
           200,
           newPost[0]
         );
       }
     } else {
-      handleRouteLogic(res, "Error", "Could Notg Add Post", 404);
+      handleRouteLogic(res, "Error", "Could Not Add Post", 404);
     }
   } catch (e) {
     handleRouteLogic(res, "Error", e.message, 403);
@@ -90,7 +93,7 @@ postsRouter.put("/id", async (req, res) => {
       handleRouteLogic(res, "Error", "Could Not Delete Post", 403);
     }
   } catch (e) {
-    handleRouteLogic(res, "Error", e, message, 403);
+    handleRouteLogic(res, "Error", e.message, 403);
   }
 });
 module.exports = postsRouter;

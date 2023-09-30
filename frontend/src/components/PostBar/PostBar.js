@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./../../Resources/CSS/postbar.css";
+import { createPostAPICall } from "../../utils/utills";
+import NewPostModal from "../CreatePostModal/NewPostModal";
 
 const PostBar = () => {
   const [showModal, setShowModal] = useState(false);
@@ -8,10 +10,12 @@ const PostBar = () => {
     setShowModal(true);
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+  const addPostToFeed = async () => {
+    // const status = response.status;
+    // const post = response.data.data;
+    const response = await createPostAPICall();
+    console.log("response for creating a response in the component", response);
   };
-
   return (
     <div className="container text-center post-bar-container d-flex justify-content-center mt-3 shadow flex-column">
       <input
@@ -26,51 +30,7 @@ const PostBar = () => {
         <i className="fa-sharp fa-regular fa-face-smile"></i>
       </div>
 
-      {showModal && (
-        <div
-          className="modal"
-          tabIndex="-1"
-          role="dialog"
-          style={{ display: "block" }}
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Create a Post</h5>
-                <button
-                  type="button"
-                  className="close"
-                  onClick={handleCloseModal}
-                >
-                  <span className="text-center">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <textarea
-                  className="form-control"
-                  rows="5"
-                  placeholder="Write your post here..."
-                ></textarea>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-primary btn-modal-post"
-                >
-                  Post
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-outline-dark btn-modal-cancel"
-                  onClick={handleCloseModal}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {showModal && <NewPostModal setShowModal={setShowModal} />}
     </div>
   );
 };

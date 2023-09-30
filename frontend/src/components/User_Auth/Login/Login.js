@@ -33,12 +33,10 @@ const Login = () => {
       e.preventDefault();
 
       const response = await logInUserCall(user);
-      console.log("login comp response", response);
 
       const status = response.status;
       const person = response.data.data;
 
-      console.log("In login comp", "Status:", status, "Person:", person);
       if (status == 200) {
         dispatch(logInUser(person));
         navigate("/feed");

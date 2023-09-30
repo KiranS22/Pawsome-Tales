@@ -61,3 +61,20 @@ export const fetchAllPostsAPICall = async () => {
     console.log("Error:", err.meesage, "Stack", err.stack);
   }
 };
+
+export const createPostAPICall = async () => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/posts/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response;
+  } catch (err) {
+    console.log("Error:", err.meesage, "Stack", err.stack);
+  }
+};

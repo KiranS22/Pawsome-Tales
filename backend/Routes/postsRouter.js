@@ -58,7 +58,7 @@ postsRouter.post("/", async (req, res) => {
     );
     if (userName.length > 0) {
       const newPost = await queryDatabase(
-        "INSERT INTO posts(content, authour, image, title) VALUES ($1, $2, $3 $4s) RETURNING*",
+        "INSERT INTO posts(content, authour, image, title) VALUES ($1, $2, $3 $4) RETURNING*",
         [content, userName, image, title]
       );
       if (newPost.length > 0) {

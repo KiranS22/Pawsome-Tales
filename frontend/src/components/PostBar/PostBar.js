@@ -31,6 +31,7 @@ const PostBar = () => {
       </div>
 
       {showModal && <NewPostModal setShowModal={setShowModal} />}
+      
     </div>
   );
 };

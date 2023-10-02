@@ -20,6 +20,9 @@ const NewPostModal = ({ setShowModal }) => {
     const cursorPosition = textareaRef.current.selectionStart;
 
     // Insert the emoji at the cursor position
+    
+    // Bug here as text  is replaced with text as apposed to being placed next to the prexisting text
+
     const newContent =
       post.content.slice(0, cursorPosition) +
       emoji.emoji +

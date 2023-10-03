@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 
 const NewPostModal = ({ setShowModal }) => {
@@ -13,23 +13,12 @@ const NewPostModal = ({ setShowModal }) => {
   };
 
 
-  const textareaRef = useRef(null);
 
   const onEmojiClick = (emoji) => {
-    // Get the current cursor position in the textarea
-    const cursorPosition = textareaRef.current.selectionStart;
-
-    // Insert the emoji at the cursor position
-    
-    // Bug here as text  is replaced with text as apposed to being placed next to the prexisting text
-
-    const newContent =
-      post.content.slice(0, cursorPosition) +
-      emoji.emoji +
-      post.content.slice(cursorPosition);
-
-    // Update the content state with the new text including the emoji
-    setPost({ ...post, content: newContent });
+    setPost((prevPost) => ({
+      ...prevPost,
+      content: prevPost.content + emoji.emoji,
+    }));
   };
 
   return (
@@ -63,7 +52,7 @@ const NewPostModal = ({ setShowModal }) => {
               placeholder="Write your post here..."
               value={post.content}
               onChange={(e) => setPost({ ...post, content: e.target.value })}
-              ref={textareaRef} // Ref to the textarea element
+
             ></textarea>
           </div>
           <div className="modal-footer d-flex justify-content-between ">

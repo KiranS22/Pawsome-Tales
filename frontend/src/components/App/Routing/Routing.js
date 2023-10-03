@@ -10,7 +10,6 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import NotFoundPage from "../../PageNotFound/NotFoundPage";
 
 const Routing = () => {
-
   return (
     <>
       <Router>
@@ -18,7 +17,7 @@ const Routing = () => {
 
         <Routes>
           <Route path="/" element={<ProtectedRoutes />}>
-            <Route path="/feed" element={<Feed />} />
+            <Route path="/" element={<Feed />} />
             <Route path="/profile" element={<EditProfile />} />
             <Route path="/profile/view" element={<ViewProfile />} />
           </Route>

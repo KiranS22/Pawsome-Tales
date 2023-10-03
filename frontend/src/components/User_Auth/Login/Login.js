@@ -17,10 +17,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const loggedIn = useSelector(selectIsLoggedIn);
+  console.log("Loggedin selector in login component", loggedIn);
 
   const userAlreadyLoggedIn = () => {
     if (loggedIn) {
-      navigate("/feed");
+      navigate("/");
     }
   };
 
@@ -33,13 +34,15 @@ const Login = () => {
       e.preventDefault();
 
       const response = await logInUserCall(user);
+      console.log(" whole Response in login", response);
 
       const status = response.status;
       const person = response.data.data;
 
       if (status == 200) {
+        console.log("person", person);
         dispatch(logInUser(person));
-        navigate("/feed");
+        navigate("/");
       }
     } catch (err) {
       console.log({ status: "Error", message: err.message, stack: err.stack });

@@ -2,22 +2,30 @@ import React, { useState } from "react";
 import "./../../Resources/CSS/edit-profile.css";
 import "./../../Resources/CSS/user-auth.css";
 import noProfile from "./../../Resources/Images/no-profile.png";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../Redux/features/Slices/Auth/Auth";
 
 const EditProfile = () => {
+  const userInfo = useSelector(selectUser)
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    address: "",
-    city: "",
-    postcode: "",
+    firstName: userInfo.first_name,
+    lastName: userInfo.last_name,
+    email: userInfo.email,
+    tel: userInfo.phone_number,
+    address: userInfo.address,
+    city: userInfo.city,
+    postcode: userInfo.postcode,
+    username: userInfo.username
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform form submission or validation logic
-  };
+    const response = await axios.put(
+      `${process.env.REACT_APP_SERVER_URL}/auth/update-profile`,
+      user,
+
+    );
+  }
 
   return (
     <section className="profile">
@@ -146,6 +154,22 @@ const EditProfile = () => {
                       required
                     />
                   </div>
+
+                  <div className="form-outline mb-3">
+                    <label className="form-label" htmlFor="username">
+                      Username
+                    </label>
+                    <input
+                      type="text"
+                      id="username"
+                      name="username"
+                      className="form-control form-control-lg"
+                      placeholder="Username"
+                      value={user.username}
+                      required
+                    />
+                  </div>
+
 
                   <button type="submit" className="btn btn-outline-dark mt-3">
                     Save Changes

@@ -105,14 +105,23 @@ authRouter.post("/login", async (req, res) => {
 
 authRouter.put("/update-profile", async (req, res) => {
   try {
-    const { firstName, lastName, email, tel, address, city, postcode } =
-      req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      tel,
+      address,
+      city,
+      postcode,
+      user_name,
+    } = req.body;
 
     const updateProfile = await queryDatabase(
-      "UPDATE users SET first_name = $1, last_name = $2,  phone_number = $3, address = $4, city=$5, postcode=$6 WHERE email = $7 RETURNING *",
-      [firstName, lastName, tel, address, city, postcode, email]
+      "UPDATE users SET first_name = $1, last_name = $2,  phone_number = $3, address = $4, city=$5, postcode=$6, username=$7 WHERE email = $8  RETURNING *",
+      [firstName, lastName, tel, address, city, postcode, user_name, email]
     );
-    if (updateProfile[0].length > 0) {
+    console.log("updated profile query", updateProfile[0]);
+    if (updateProfile.length > 0) {
       handleRouteLogic(
         res,
         "Success",

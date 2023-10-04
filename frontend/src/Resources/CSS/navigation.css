@@ -1,5 +1,5 @@
 nav {
-  width: 89%;
+  max-width: 80%;
   margin: 0 auto;
 }
 .logo-img {
@@ -13,12 +13,13 @@ nav {
   color: var(--accent-1);
   font-size: 1.5rem;
 }
-.fa-user:hover{
+.fa-user:hover {
   color: var(--icon-hover);
 }
 input[type="search"] {
   border-radius: 5px;
   width: 25rem;
+  max-width: 90%;
 }
 
 input[type="search"]:focus {

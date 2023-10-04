@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import "./../../Resources/CSS/edit-profile.css";
 import "./../../Resources/CSS/user-auth.css";
 import noProfile from "./../../Resources/Images/no-profile.png";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../Redux/features/Slices/Auth/Auth";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, updateUser } from "../../Redux/features/Slices/Auth/Auth";
+import axios from "axios";
 
 const EditProfile = () => {
-  const userInfo = useSelector(selectUser)
+  const dispatch = useDispatch();
+  const userInfo = useSelector(selectUser);
   const [user, setUser] = useState({
     firstName: userInfo.first_name,
     lastName: userInfo.last_name,
@@ -15,17 +17,23 @@ const EditProfile = () => {
     address: userInfo.address,
     city: userInfo.city,
     postcode: userInfo.postcode,
-    username: userInfo.username
+    user_name: userInfo.username,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Update Profile running");
     const response = await axios.put(
       `${process.env.REACT_APP_SERVER_URL}/auth/update-profile`,
-      user,
-
+      user
     );
-  }
+    const status = response.status;
+    if (status == 200) {
+      dispatch(updateUser(user));
+    } else {
+      console.log("not working");
+    }
+  };
 
   return (
     <section className="profile">
@@ -44,19 +52,28 @@ const EditProfile = () => {
                   className="rounded-circle img-fluid"
                   style={{ width: "150px" }}
                 />
-                <h5 className="my-3">John Smith</h5>
+                <h5 className="my-3">
+                  {user.firstName} {user.lastName}
+                </h5>
               </div>
             </div>
           </div>
           <div className="col-lg-8">
             <div className="card mb-4">
               <div className="card-body">
-                <form onSubmit={handleSubmit} method="POST">
+                <form
+                  onSubmit={(e) => {
+                    handleSubmit(e);
+                  }}
+                >
                   <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="firstName">
                       First Name:
                     </label>
                     <input
+                      onChange={(e) =>
+                        setUser({ ...user, firstName: e.target.value })
+                      }
                       type="text"
                       id="firstName"
                       className="form-control form-control-lg"
@@ -72,6 +89,9 @@ const EditProfile = () => {
                       Last Name:
                     </label>
                     <input
+                      onChange={(e) =>
+                        setUser({ ...user, lastName: e.target.value })
+                      }
                       type="text"
                       id="lastName"
                       className="form-control form-control-lg"
@@ -86,6 +106,9 @@ const EditProfile = () => {
                       Email:
                     </label>
                     <input
+                      onChange={(e) =>
+                        setUser({ ...user, email: e.target.value })
+                      }
                       type="email"
                       id="email"
                       className="form-control form-control-lg"
@@ -97,26 +120,14 @@ const EditProfile = () => {
                   </div>
 
                   <div className="form-outline mb-3">
-                    <label className="form-label" htmlFor="password">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      id="password"
-                      className="form-control form-control-lg"
-                      placeholder="Enter password"
-                      value={user.password}
-                      name="password"
-                      required
-                    />
-                  </div>
-
-                  <div className="form-outline mb-3">
                     <label className="form-label" htmlFor="address">
                       Address
                     </label>
                     <input
                       type="text"
+                      onChange={(e) =>
+                        setUser({ ...user, address: e.target.value })
+                      }
                       id="address"
                       name="address"
                       className="form-control form-control-lg"
@@ -131,6 +142,9 @@ const EditProfile = () => {
                       City
                     </label>
                     <input
+                      onChange={(e) =>
+                        setUser({ ...user, city: e.target.value })
+                      }
                       type="text"
                       id="city"
                       name="city"
@@ -145,6 +159,9 @@ const EditProfile = () => {
                       Postcode
                     </label>
                     <input
+                      onChange={(e) =>
+                        setUser({ ...user, postcode: e.target.value })
+                      }
                       type="text"
                       id="postcode"
                       name="postcode"
@@ -160,16 +177,18 @@ const EditProfile = () => {
                       Username
                     </label>
                     <input
+                      onChange={(e) =>
+                        setUser({ ...user, user_name: e.target.value })
+                      }
                       type="text"
                       id="username"
                       name="username"
                       className="form-control form-control-lg"
                       placeholder="Username"
-                      value={user.username}
+                      value={user.user_name}
                       required
                     />
                   </div>
-
 
                   <button type="submit" className="btn btn-outline-dark mt-3">
                     Save Changes

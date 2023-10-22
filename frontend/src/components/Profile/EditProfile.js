@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, updateUser } from "../../Redux/features/Slices/Auth/Auth";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./../../Resources/CSS/edit-profile.css";
 import "./../../Resources/CSS/user-auth.css";
 import noProfile from "./../../Resources/Images/no-profile.png";
@@ -22,19 +22,18 @@ const EditProfile = () => {
     user_name: userInfo.user_name,
   });
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await axios.put(
       `${process.env.REACT_APP_SERVER_URL}/auth/update-profile`,
       user
     );
+    console.log("update profile response", response);
 
     const status = response.status;
     if (status == 200) {
       dispatch(updateUser(user));
-      navigate("/")
+      navigate("/");
     } else {
       console.log("not working");
     }

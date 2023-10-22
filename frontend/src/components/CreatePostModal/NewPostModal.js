@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import EmojiPicker from "emoji-picker-react";
-import "./.././../Resources/CSS/post-modal.css";
+
 
 const NewPostModal = ({ setShowModal }) => {
   const [post, setPost] = useState({

@@ -22,6 +22,8 @@ const EditProfile = () => {
     user_name: userInfo.user_name,
   });
 
+  console.log(user);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

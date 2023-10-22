@@ -20,13 +20,15 @@ const EditProfile = () => {
     user_name: userInfo.username,
   });
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Update Profile running");
     const response = await axios.put(
       `${process.env.REACT_APP_SERVER_URL}/auth/update-profile`,
       user
     );
+   
     const status = response.status;
     if (status == 200) {
       dispatch(updateUser(user));

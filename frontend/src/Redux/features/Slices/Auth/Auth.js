@@ -11,9 +11,8 @@ const Auth = createSlice({
   initialState,
   reducers: {
     logInUser: (state, action) => {
-      console.log("Login User redux action ");
+
       const { user, token } = action.payload;
-      console.log("user in redux ", user, "Token in redux ", token);
       if (user && token) {
         state.user = user;
         state.isLoggedIn = true;

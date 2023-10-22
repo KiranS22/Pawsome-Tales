@@ -45,7 +45,7 @@ authRouter.post("/register", async (req, res) => {
         newUser[0]["first_name"] + "-" + newUser[0]["last_name"] + val;
       // Inserting the username into the database
       const generatedUserName = await queryDatabase(
-        "UPDATE users SET username = $1 WHERE email = $2 RETURNING *",
+        "UPDATE users SET user_name = $1 WHERE email = $2 RETURNING *",
         [userName, email]
       );
 
@@ -74,7 +74,7 @@ authRouter.post("/login", async (req, res) => {
     const user = await queryDatabase("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
-    // console.log("User after query", user);
+
     if (user.length > 0) {
       const founduser = user[0];
 

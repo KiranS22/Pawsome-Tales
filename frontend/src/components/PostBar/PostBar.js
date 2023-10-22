@@ -14,7 +14,7 @@ const PostBar = () => {
     // const status = response.status;
     // const post = response.data.data;
     const response = await createPostAPICall();
-    console.log("response for creating a response in the component", response);
+   
   };
   return (
     <div className="container text-center post-bar-container d-flex justify-content-center mt-3 shadow flex-column">
@@ -31,7 +31,7 @@ const PostBar = () => {
       </div>
 
       {showModal && <NewPostModal setShowModal={setShowModal} />}
-      
+
     </div>
   );
 };

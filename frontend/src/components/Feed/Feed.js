@@ -8,7 +8,7 @@ import "./../../Resources/CSS/feed.css";
 const Feed = () => {
   const [showModal, setShowModal] = useState(false);
   const user = useSelector(selectUser);
-  console.log("User in feed component ", user);
+
 
   const handleInputClick = () => {
     setShowModal(true);

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
   const loggedIn = useSelector(selectIsLoggedIn);
-  console.log("Login state within navbar ", loggedIn);
+
 
   const navigate = useNavigate();
 

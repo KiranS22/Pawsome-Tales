@@ -4,10 +4,12 @@ import "./../../Resources/CSS/user-auth.css";
 import noProfile from "./../../Resources/Images/no-profile.png";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, updateUser } from "../../Redux/features/Slices/Auth/Auth";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userInfo = useSelector(selectUser);
   const [user, setUser] = useState({
     firstName: userInfo.first_name,
@@ -17,9 +19,8 @@ const EditProfile = () => {
     address: userInfo.address,
     city: userInfo.city,
     postcode: userInfo.postcode,
-    user_name: userInfo.username,
+    user_name: userInfo.user_name,
   });
-
 
 
   const handleSubmit = async (e) => {
@@ -28,10 +29,11 @@ const EditProfile = () => {
       `${process.env.REACT_APP_SERVER_URL}/auth/update-profile`,
       user
     );
-   
+
     const status = response.status;
     if (status == 200) {
       dispatch(updateUser(user));
+      navigate("/")
     } else {
       console.log("not working");
     }

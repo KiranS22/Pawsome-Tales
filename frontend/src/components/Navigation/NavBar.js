@@ -50,7 +50,7 @@ const Navbar = () => {
 
           {loggedIn ? (
             <>
-              <Link className="nav-link" to="/profile">
+              <Link className="nav-link" to="/profile/edit">
                 <i className="far fa-user"></i>
               </Link>
               <button

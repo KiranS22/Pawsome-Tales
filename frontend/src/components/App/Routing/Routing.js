@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "../../Navigation/NavBar";
 import Login from "../../User_Auth/Login/Login";
@@ -18,8 +18,10 @@ const Routing = () => {
         <Routes>
           <Route path="/" element={<ProtectedRoutes />}>
             <Route path="/" element={<Feed />} />
-            <Route path="/profile" element={<EditProfile />} />
-            <Route path="/profile/view" element={<ViewProfile />} />
+            <Route path="/profile" element={<ViewProfile />} />{" "}
+            {/*Going to change this to use dynamic data user id */}
+            <Route path="/profile/edit" element={<EditProfile />} />{" "}
+            {/*Going to change this to use dynamic data user id */}
           </Route>
 
           <Route path="/register" element={<Register />} />

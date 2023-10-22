@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "./../../Resources/CSS/edit-profile.css";
-import "./../../Resources/CSS/user-auth.css";
-import noProfile from "./../../Resources/Images/no-profile.png";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, updateUser } from "../../Redux/features/Slices/Auth/Auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./../../Resources/CSS/edit-profile.css";
+import "./../../Resources/CSS/user-auth.css";
+import noProfile from "./../../Resources/Images/no-profile.png";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,6 @@ const EditProfile = () => {
     user_name: userInfo.user_name,
   });
 
-  console.log(user);
 
 
   const handleSubmit = async (e) => {
